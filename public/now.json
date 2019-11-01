@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "notefulApp-clientside",
+    "routes": [
+        {
+            "src": "^/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": ".*",
+            "dest": "/index.html"
+        }
+    ]
+}
