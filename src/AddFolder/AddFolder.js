@@ -20,6 +20,9 @@ export default class AddFolder extends Component {
   }
   static contextType = ApiContext;
 
+  updateFolder(folder_name) {
+    this.setState({ folder_name }, () => { this.validateFolder(folder_name) });
+  }
   validateFolder(inputValue) {
     let errorMsg = this.state.validMessage;
     let hasError = false;
@@ -48,7 +51,7 @@ export default class AddFolder extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const folder = {
-      folder_name: e.target['folder-name'].value
+      name: e.target['folder-name'].value
     }
     fetch(`${config.API_ENDPOINT}/folders`, {
       method: 'POST',
@@ -81,12 +84,12 @@ export default class AddFolder extends Component {
             <label htmlFor='folder-name-input'>
               Name
             </label>
-            <input type='text' id='folder-name-input' name='folder-name' />
+            <input type='text' id='folder-name-input' name='folder-name' onChange={e => this.updateFolder(e.target.value)} />
           </div>
           <ValidationError hasError={!this.state.folderValid} message={this.state.validMessage} />
 
           <div className='buttons'>
-            <button type='submit'>
+            <button type='submit' disabled={!this.state.folderValid}>
               Add folder
             </button>
           </div>
